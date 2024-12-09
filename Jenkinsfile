@@ -12,11 +12,13 @@ pipeline {
                 stage('Install Dependencies') {
                     steps {
                         sh 'npm install'
+                        echo 'Dependencies installed'
                     }
                 }
                 stage('Proyect Build') {
                     steps {
                         sh 'npm run build'
+                        echo 'Proyect builded'
                     }
                 }
             }
