@@ -1,14 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Primera Etapa') {
+        stage('Dependencies Build') {
             steps {
-                echo 'Saludos desde mi primer pipeline'
+                echo 'npm install'
             }
         }
-        stage('Segunda Etapa') {
+        stage('Proyect Build') {
             steps {
-                echo 'Saludos desde mi segundo pipeline'
+                echo 'npm run build'
             }
         }
     }
