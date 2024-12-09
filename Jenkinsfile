@@ -9,6 +9,12 @@ pipeline {
                 }
             }
             stages {
+                stage('Check Workspace') {
+                    steps {
+                        sh 'pwd'  // Imprime el directorio actual
+                        sh 'ls -la'  // Muestra los archivos en el directorio
+                    }
+                }
                 stage('Install Dependencies') {
                     steps {
                         sh 'npm install'
