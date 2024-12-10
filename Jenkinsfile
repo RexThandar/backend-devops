@@ -50,7 +50,8 @@ pipeline {
                     }
                 }
             }
-    
+        }
+    }
     post {
         always {
             // Pasos que se ejecutan siempre después de cualquier etapa
