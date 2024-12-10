@@ -1,8 +1,7 @@
 pipeline {
-    agent any  // Puede ser 'any' para usar cualquier nodo disponible, o un nodo específico
+    agent any
     
     environment {
-        // Define las variables de entorno necesarias, por ejemplo, para las credenciales
         GIT_REPO_URL = 'https://github.com/RexThandar/backend-devops.git'
         GIT_BRANCH = 'main'
     }
@@ -11,40 +10,46 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Clona el repositorio en el workspace de Jenkins
                     git url: GIT_REPO_URL, branch: GIT_BRANCH
                 }
             }
         }
         
-        stage('Build Dependencies') {
-            steps {
-                // Aquí puedes agregar tus pasos de compilación o ejecución
-                sh 'npm install'
+        stage('Build General') {
+            agent {
+                docker {
+                    image 'node:22-alpine'
+                    reuseNode true
+                }
             }
-        }
 
-        stage('Build App') {
-            steps {
-                // Aquí puedes agregar tus pasos de compilación o ejecución
-                sh 'npm run build'
-            }
-        }
+            stages {
+                stage('Install') {
+                    steps {
+                        sh 'npm install'
+                        echo 'Instalando dependencias...'
+                    }
+                }
 
-        stage('Test') {
-            steps {
-                // Aquí puedes agregar tus pasos de pruebas
-                echo 'Ejecutando pruebas...'
-            }
-        }
+                stage('Build') {
+                    steps {
+                        sh 'npm run build'
+                        echo 'Construyendo la aplicación...'
+                    }
+                }
 
-        stage('Deploy') {
-            steps {
-                // Aquí puedes agregar los pasos de despliegue
-                echo 'Desplegando la aplicación...'
+                stage('Test') {
+                    steps {
+                        echo 'Ejecutando pruebas...'
+                    }
+                }
+
+                stage('Deploy') {
+                    steps {
+                        echo 'Desplegando la aplicación...'
+                    }
+                }
             }
-        }
-    }
     
     post {
         always {
