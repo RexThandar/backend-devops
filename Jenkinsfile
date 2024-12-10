@@ -15,13 +15,13 @@ pipeline {
             }
         }
         
-        stage('Build General') {
-            // agent {
-            //     docker {
-            //         image 'node:22-alpine'
-            //         reuseNode true
-            //     }
-            // }
+        // stage('Build General') {
+        //     // agent {
+        //     //     docker {
+        //     //         image 'node:22-alpine'
+        //     //         reuseNode true
+        //     //     }
+        //     // }
 
             stages {
                 stage('Install') {
@@ -50,8 +50,8 @@ pipeline {
                     }
                 }
             }
-        }
-    }
+        //}
+    //}
     post {
         always {
             // Pasos que se ejecutan siempre después de cualquier etapa
