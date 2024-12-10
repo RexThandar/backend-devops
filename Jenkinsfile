@@ -17,10 +17,17 @@ pipeline {
             }
         }
         
-        stage('Build') {
+        stage('Build Dependencies') {
             steps {
                 // Aquí puedes agregar tus pasos de compilación o ejecución
-                echo 'Ejecutando el build...'
+                sh 'npm install'
+            }
+        }
+
+        stage('Build App') {
+            steps {
+                // Aquí puedes agregar tus pasos de compilación o ejecución
+                sh 'npm run build'
             }
         }
 
