@@ -16,12 +16,12 @@ pipeline {
         }
         
         stage('Build General') {
-            agent {
-                docker {
-                    image 'node:22-alpine'
-                    reuseNode true
-                }
-            }
+            // agent {
+            //     docker {
+            //         image 'node:22-alpine'
+            //         reuseNode true
+            //     }
+            // }
 
             stages {
                 stage('Install') {
