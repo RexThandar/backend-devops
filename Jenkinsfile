@@ -2,11 +2,14 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
+        stage('Primera etapa') {
             steps {
-                script {
-                    git url: GIT_REPO_URL, branch: GIT_BRANCH
-                }
+                echo 'Hola, mundo!'
+            }
+        }
+        stage('Segunda etapa') {
+            steps {
+                echo 'Hola, mundo!'
             }
         }
     }
