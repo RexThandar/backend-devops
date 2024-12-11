@@ -1,10 +1,8 @@
 pipeline {
     agent any
-    
     environment {
-        USERNAME = 'rex'
+        USERNAME = 'Felipe'
     }
-
     stages {
         stage('Build - instalacion dependencias') {
             agent {
