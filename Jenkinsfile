@@ -15,6 +15,11 @@ pipeline {
                         sh 'npm install'
                     }
                 }
+                stage('build - Pruebas unitarias') {
+                    steps {
+                        sh 'npm run test'
+                    }
+                }
                 stage('build - build de la aplicacion') {
                     steps {
                         sh 'npm run build'
