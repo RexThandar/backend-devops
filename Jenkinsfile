@@ -35,7 +35,6 @@ pipeline {
                 script {
                     docker.withRegistry("http://localhost:8082", "registry"){
                         sh 'docker build -t backend-devops .'
-                        sleep(time: 10, unit: 'SECONDS')
                         sh 'docker tag backend-devops:latest localhost:8082/backend-devops:latest'
                         sleep(time: 10, unit: 'SECONDS')
                         sh 'docker push localhost:8082/backend-devops:latest'
