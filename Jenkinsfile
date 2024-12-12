@@ -29,16 +29,19 @@ pipeline {
                 }
             }
         }
-        stage("delivery - subida a nexus"){
-            steps{
+        stage("delivery - subida a nexus") {
+            steps {
                 script {
-                    docker.withRegistry("http://localhost:8082", "registry"){
-                        sh 'docker build -t backend-devops .'
-                        sh 'docker tag backend-devops:latest localhost:8082/backend-devops:latest'
-                        sh 'docker push localhost:8082/backend-devops:latest'
+                    withCredentials([usernamePassword(credentialsId: 'registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh """
+                            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin http://localhost:8082
+                            docker build -t backend-devops .
+                            docker tag backend-devops:latest localhost:8082/backend-devops:latest
+                            docker push localhost:8082/backend-devops:latest
+                        """
                     }
                 }
-            } 
+            }
         }
     }
 
