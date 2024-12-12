@@ -29,17 +29,27 @@ pipeline {
                 }
             }
         }
-        stage("delivery - subida a nexus"){
-            steps{
+        stage("delivery - subida a nexus") {
+            steps {
                 script {
-                    docker.withRegistry("http://localhost:8082", "registry"){
-                        sh 'docker build -t backend-devops .'
-                        sh 'docker tag backend-devops:latest localhost:8082/backend-devops:latest'
-                        sh 'docker push localhost:8082/backend-devops:latest'
-                    }
+                    // Autenticarse en el registro de Nexus
+                    sh 'docker login -u admin -p aquila777 http://localhost:8082'
+
+                    // Construir la imagen Docker
+                    sh 'docker build -t backend-devops:latest .'
+
+                    // Etiquetar la imagen para el registro de Nexus
+                    sh 'docker tag backend-devops:latest localhost:8082/backend-devops:latest'
+
+                    // Subir la imagen al registro de Nexus
+                    sh 'docker push localhost:8082/backend-devops:latest'
+
+                    // Cerrar sesión por seguridad (opcional)
+                    sh 'docker logout http://localhost:8082'
                 }
-            } 
+            }
         }
+
     }
 
     post {
